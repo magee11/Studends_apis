@@ -7,13 +7,13 @@ const {
   Login,
   EditProfile,
   Profile,
-  GetAllUsers
+  GetAllUsers,
 } = require("../controllers/students_api");
 
 router.post("/register", Register);
 router.post("/login", Login);
-router.get("/profile/", verify, Profile);
-router.put("/edit/:id", verify, EditProfile);
-router.delete("/logout/:id", verify, Logout);
-router.get("/getall",GetAllUsers)
+router.get("/profile", verify, Profile);
+router.put("/edit", verify, EditProfile);
+router.delete("/logout", verify, Logout);
+router.get("/getall", GetAllUsers);
 module.exports = router;

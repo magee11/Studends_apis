@@ -46,12 +46,7 @@ const Login = async (req, res) => {
       res.status(400).json({ Message: "All input required" });
     }
     const user = await Students.findOne({ Email: Email });
-    console.log("====================================");
-    console.log(user);
-    console.log("====================================");
-
     if (user && (await bcrypt.compare(Password, user.Password))) {
-      console.log("djsnfsjdnfkjsndkjfnksjdnjkn");
       const access_token = jwt.sign(
         { user_id: user._id, Email },
         process.env.TOKEN_KEY,
@@ -72,9 +67,12 @@ const Login = async (req, res) => {
         access_token,
       });
     }
+    else{
     res.status(400).send("Invalid credentials");
+    }
+
   } catch (err) {
-    res.send(err).status(500);
+    res.json({ message: err }).status(500);
   }
 };
 

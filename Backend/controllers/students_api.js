@@ -66,11 +66,9 @@ const Login = async (req, res) => {
         refresh_token,
         access_token,
       });
+    } else {
+      res.status(400).send("Invalid credentials");
     }
-    else{
-    res.status(400).send("Invalid credentials");
-    }
-
   } catch (err) {
     res.json({ message: err }).status(500);
   }
@@ -125,13 +123,8 @@ const Logout = (req, res) => {
 
 const GetAllUsers = async (req, res) => {
   try {
-    const admin = req.body.admin;
-    if (admin) {
-      const alluser = await Students.find({});
-      res.send(alluser);
-    } else {
-      res.send("Only for admin uses");
-    }
+    const alluser = await Students.find({});
+    res.send(alluser);
   } catch (err) {
     res.send(err);
   }

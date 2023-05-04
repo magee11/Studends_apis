@@ -5,12 +5,19 @@ import {
   addNumber,
   removeNumber,
 } from "../../redux/actions/leaveRequestActions";
+import axios from "axios"
 // import mail from '../../../backend/mail'
 // import nodemailer from 'nodemailer';
 
 
 
 const LeaveRequest = () => {
+  function handleEmail(){
+    debugger
+    axios("http://localhost:5000/api/v1/mail")
+    .then(res=>console.log("res",res))
+    .catch(err=>console.log("err",err))
+  }
   const dispatch = useDispatch();
   const number = useSelector((leave) => leave.LeaveRequest.number);
 
@@ -33,16 +40,17 @@ const LeaveRequest = () => {
      <h2>CTS</h2>
      <p>CTS onboarding on next week</p>
       <br />
-      <Button
+      <button
         style={{
           cursor: "pointer",
           color: "white",
           backgroundColor: "green",
           boxSizing: 30,
         }}
+        onClick={handleEmail}
       >
         APPLY
-      </Button>
+      </button>
       <Button
         style={{
           margin: 30,
@@ -63,17 +71,17 @@ const LeaveRequest = () => {
      <h2>IBM</h2>
      <p>IBM onboarding</p>
       <br />
-      <Button
+      <button
         style={{
           cursor: "pointer",
           color: "white",
           backgroundColor: "green",
           boxSizing: 30,
         }}
-      >
+      onClick={handleEmail}>
         APPLY
-      </Button>
-      <Button
+      </button>
+      <button
         style={{
           margin: 30,
           cursor: "pointer",
@@ -82,7 +90,7 @@ const LeaveRequest = () => {
         }}
       >
         CANCEL
-      </Button>
+      </button>
     </Card>
     <hr></hr>
     <Card

@@ -61,11 +61,7 @@ const Login = async (req, res) => {
           expiresIn: "20d",
         }
       );
-      await res.status(200).cookie("access_token", access_token).json({
-        message: "Logged in successfully 😊 👌",
-        refresh_token,
-        access_token,
-      });
+      await res.status(200).cookie("access_token", access_token);
     } else {
       res.status(400).send("Invalid credentials");
     }

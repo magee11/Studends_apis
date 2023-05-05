@@ -32,18 +32,27 @@ import "./index.css";
 const Profile = () => {
   const [allUsers, setallUsers] = useState([]);
 
-  const getAllUsers = () => {
-    axios
-      .get("http://localhost:5000/getallusers")
-      .then((data) => {
-        setallUsers(data.data);
-      })
-      .catch((err) => console.log(err));
-  };
+  // const getAllUsers = () => {
+  //   axios
+  //     .get("http://localhost:5000/api/v1/profile/")
+  //     .then((data) => {
+  //       setallUsers(data.data);
+  //       console.log("Success")
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
 
   useEffect(() => {
-    getAllUsers();
-  }, []);
+    // debugger
+    axios
+      .get("http://localhost:5000/api/v1/profile/")
+      .then((data) => {
+        setallUsers(data.data);
+        console.log("Success")
+      })
+      .catch((err) => console.log(err));
+    // getAllUsers();
+  }, [allUsers]);
 
   const deleteUser = (id) => {
     axios
@@ -51,7 +60,7 @@ const Profile = () => {
       .then((data) => {
         if (data?.data?.success == true) {
           alert(data?.data?.message);
-          getAllUsers();
+          // getAllUsers();
         } else {
           alert("Network error. please try later");
         }
@@ -61,6 +70,7 @@ const Profile = () => {
 
   return (
     <div className="homepage">
+      {console.log("getting",allUsers)}
       <div
         className="container"
         style={{ backgroundColor: "azure", width: "800px", margin: "auto" }}

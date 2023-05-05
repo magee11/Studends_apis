@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { Layout, Menu, Dropdown, message } from "antd";
 import {
   UserOutlined,
@@ -11,6 +12,15 @@ import {
 } from "@ant-design/icons";
 const { Sider } = Layout;
 const SideMenu = ({ collapse, setContent }) => {
+  function handleClick(){
+    axios
+    .get("http://localhost:5000/api/v1/profile/")
+    .then((data) => {
+      // setallUsers(data.data);
+      console.log("Success",data)
+    })
+    .catch((err) => console.log(err));
+  }
   const navClick = (e) => {
     setContent(e?.key);
   };
@@ -43,7 +53,7 @@ const SideMenu = ({ collapse, setContent }) => {
         <Menu.Item key="dashboard" icon={<PieChartOutlined />}>
           Dashboard
         </Menu.Item>
-        <Menu.Item key="profile" icon={<UserOutlined />}>
+        <Menu.Item  onClick={handleClick} key="profile" icon={<UserOutlined />}>
           Profile
         </Menu.Item>
         <Menu.Item key="user" icon={<DesktopOutlined />}>

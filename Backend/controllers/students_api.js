@@ -61,7 +61,7 @@ const Login = async (req, res) => {
           expiresIn: "20d",
         }
       );
-      await res.status(200).cookie("access_token", access_token);
+      await res.status(200).json({ "access-key": access_token });
     } else {
       res.status(400).send("Invalid credentials");
     }
@@ -74,9 +74,11 @@ const Login = async (req, res) => {
 
 const Profile = async (req, res) => {
   try {
-    const token = req.cookies.access_token;
+    const x = req.header("authorization");
+    token = x.split(" ")[1];
     const decode = jwt.verify(token, process.env.TOKEN_KEY);
     const user = await Students.findOne({ _id: decode.user_id });
+    console.log(decode);
     res.send(user);
   } catch (err) {
     res.send(err);
@@ -87,7 +89,8 @@ const Profile = async (req, res) => {
 
 const EditProfile = async (req, res) => {
   try {
-    const token = req.cookies.access_token;
+    const x = req.header("authorization");
+    token = x.split(" ")[1];
     const decode = jwt.verify(token, process.env.TOKEN_KEY);
     const updatedUser = await Students.findOneAndUpdate(
       { _id: decode.user_id },
@@ -128,10 +131,9 @@ const GetAllUsers = async (req, res) => {
 
 // Mail API
 const Mailer = async (req, res) => {
-  const token = req.cookies.access_token;
+  const x = req.header("authorization");
+  token = x.split(" ")[1];
   const decode = jwt.verify(token, process.env.TOKEN_KEY);
-  console.log(decode.Email);
-  const user = await Students.findOne({ _id: decode.user_id });
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -141,7 +143,7 @@ const Mailer = async (req, res) => {
   });
   const mailOptions = {
     from: "admin@collage.org",
-    to: decode.Email,
+    to:decode.Email,
     subject: "Placement",
     // html: `<b>Name :<b><p>${user.Name}<p><b>User Id :<b><p>${user._id}<p><b>Placement :<b><p>${user.Placement}<p><b>Email :<b><p>${user.Email}<p>`,
     // html: '<center><h1>Node Mailer<h1><img src="https://res.cloudinary.com/practicaldev/image/fetch/s--6NiDsq1m--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_66%2Cw_880/https://pa1.narvii.com/6302/3cdf3ccd32e76952e68ecbc6bcb5d3738a20152a_hq.gif" alt="image description" style="width:500px; height:600px;"><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia,molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit fugiat iusto fuga praesentiumoptio, eaque rerum! Provident similique accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut molestias architecto voluptate aliquamnihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos sapiente officiis modi at sunt excepturi expedita sint? Sed quibusdam recusandae alias error harum maxime adipisci amet laborum. Perspiciatis     minima nesciunt dolorem! Officiis iure rerum voluptates a cumque velit    quibusdam sed amet tempora. Sit laborum ab, eius fugit doloribus tenetur fugiat, temporibus enim commodi iusto libero magni deleniti quod quam <p>button type="submit" style="height: 10px; width: 30px; border-radius: 20px; background-color: blanchedalmond; color: black; "> Login</button><center>',

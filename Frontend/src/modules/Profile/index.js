@@ -30,6 +30,7 @@ import axios from "axios";
 import "./index.css";
 
 const Profile = () => {
+  const url = "http://localhost:5000/api/v1/profile/643d16acfc05ca3922a85c1b"
   const [allUsers, setallUsers] = useState([]);
 
   // const getAllUsers = () => {
@@ -45,7 +46,7 @@ const Profile = () => {
   useEffect(() => {
     // debugger
     axios
-      .get("http://localhost:5000/api/v1/profile/")
+      .get(url)
       .then((data) => {
         setallUsers(data.data);
         console.log("Success")
@@ -53,7 +54,7 @@ const Profile = () => {
       .catch((err) => console.log(err));
     // getAllUsers();
   }, [allUsers]);
-
+  
   const deleteUser = (id) => {
     axios
       .delete(`http://localhost:5000/deleteuser?userid=` + id)

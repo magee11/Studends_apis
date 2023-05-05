@@ -23,7 +23,7 @@ const {
 // Studens api
 router.post("/register", Register);
 router.post("/login", Login);
-router.get("/profile", verify, Profile);
+router.get("/profile", verify,Profile);
 router.put("/edit", verify, EditProfile);
 router.delete("/logout", verify, Logout);
 router.get("/getall", GetAllUsers);

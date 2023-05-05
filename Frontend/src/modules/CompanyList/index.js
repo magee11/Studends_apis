@@ -13,7 +13,6 @@ import axios from "axios"
 
 const LeaveRequest = () => {
   function handleEmail(){
-    debugger
     axios("http://localhost:5000/api/v1/mail")
     .then(res=>console.log("res",res))
     .catch(err=>console.log("err",err))

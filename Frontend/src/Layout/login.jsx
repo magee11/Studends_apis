@@ -4,6 +4,8 @@ import "./login.css";
 import AdminDashboard from "./layout";
 import StudentDashboard from "./studLayout";
 
+import jwt_decode from "jwt-decode";
+
 import { useEffect } from "react/cjs/react.production.min";
 
 const Login = () => {
@@ -59,6 +61,10 @@ const Login = () => {
           Password: loginPassword,
         })
         .then((data) => {
+          var token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjQ1M2I3NTU2NTc4OTRhNTBlODU2MTdlIiwiRW1haWwiOiJtYWdlc2htYXJjaEBnbWFpbC5jb20iLCJpYXQiOjE2ODMyODYyNDQsImV4cCI6MTY4MzI4OTg0NH0.2dVebkuk45RkmIZCk7xtgEQ7PN3BJOHSPApLn1CO2mY";
+          var decoded = jwt_decode(token);
+
+          console.log(decoded);
           console.log(data?.data);
           if (data.access == true) {
             window.location.href = "/AdminDashboard";
